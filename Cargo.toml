@@ -1,0 +1,13 @@
+[package]
+name = "rust_app_with_db"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "0.2", features = ["macros"] }
+warp = "0.2"
+postgres = {version = "0.19", features = ["with-chrono-0_4"]}
+serde = {version = "1.0", features = ["derive"] }
+serde_derive = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+rusqlite = { version = "0.24.1", features = ["bundled", "chrono"] }
