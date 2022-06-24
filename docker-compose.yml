@@ -1,0 +1,17 @@
+version: "2.6.0"
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+  postgres:
+    image: postgres:13.3
+    restart: always
+    environment:
+      POSTGRES_DB: "urllog"
+      POSTGRES_USER: "yury"
+      POSTGRES_PASSWORD: "1111"
+    volumes:
+      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+    ports:
+      - "5432:5432"

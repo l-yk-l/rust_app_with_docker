@@ -2,8 +2,10 @@ use chrono::prelude::*;
 use postgres::{Client, Error, NoTls};
 use warp::{path::FullPath, Filter};
 
+const CONN: &str = "postgresql://yury@127.0.0.1:5432/urllog";
+
 fn list_all() -> Result<String, Error> {
-    let client = Client::connect("postgresql://urllog@localhost:5432/urllog", NoTls);
+    let client = Client::connect(CONN, NoTls);
 
     let mut res = String::from("");
 
@@ -26,21 +28,21 @@ fn list_all() -> Result<String, Error> {
                 };
             }
         }
-        Err(e) => panic!("{}", e),
+        Err(e) => panic!("LIST: {}", e),
     };
 
     Ok(res)
 }
 
 fn insert_row(path: &FullPath) -> String {
-    let client = Client::connect("postgresql://urllog@localhost:5432/urllog", NoTls);
+    let client = Client::connect(CONN, NoTls);
 
     match client {
         Ok(mut good_client) => good_client.execute(
             "INSERT INTO log (log_text) VALUES ($1)",
             &[&path.as_str().to_string()],
         ),
-        Err(e) => panic!("{}", e),
+        Err(e) => panic!("INSERT {}", e),
     }
     .ok();
 
