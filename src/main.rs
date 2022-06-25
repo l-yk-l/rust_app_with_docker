@@ -28,7 +28,7 @@ fn list_all() -> Result<String, Error> {
                 };
             }
         }
-        Err(e) => panic!("LIST: {}", e),
+        Err(e) => return Ok(format!("LIST: {}", e)),
     };
 
     Ok(res)
@@ -42,7 +42,7 @@ fn insert_row(path: &FullPath) -> String {
             "INSERT INTO log (log_text) VALUES ($1)",
             &[&path.as_str().to_string()],
         ),
-        Err(e) => panic!("INSERT {}", e),
+        Err(e) => return format!("INSERT: {}", e),
     }
     .ok();
 
@@ -53,7 +53,7 @@ fn insert_row(path: &FullPath) -> String {
 async fn main() {
     let list = warp::path!("list").map(|| match list_all() {
         Ok(list) => list,
-        Err(e) => panic!("{}", e),
+        Err(e) => format!("{}", e),
     });
 
     let insert = warp::path::full().map(move |path: FullPath| insert_row(&path));
