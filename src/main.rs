@@ -2,7 +2,7 @@ use chrono::prelude::*;
 use postgres::{Client, Error, NoTls};
 use warp::{path::FullPath, Filter};
 
-const CONN: &str = "postgresql://yury@127.0.0.1:5432/urllog";
+const CONN: &str = "postgresql://yury:1111@postgres:5432/urllog";
 
 fn list_all() -> Result<String, Error> {
     let client = Client::connect(CONN, NoTls);
