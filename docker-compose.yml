@@ -10,7 +10,7 @@ services:
     environment:
       POSTGRES_DB: "urllog"
       POSTGRES_USER: "yury"
-      POSTGRES_PASSWORD: "1111"
+      POSTGRES_PASSWORD: ""
     volumes:
       - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
     ports:
